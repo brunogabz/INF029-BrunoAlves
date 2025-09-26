@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #define MAX 100
 
 
@@ -12,9 +10,10 @@ typedef struct
 }Carro;
 
 void menu();
+void limpar_buffer();
 
 int main()
-{		
+{	
 	int cont = 0; 
 	int sair = 0;
    	Carro carro[MAX];
@@ -23,6 +22,7 @@ int main()
 		menu();
 		int opcao = -1;
 		scanf("%d", &opcao);
+		limpar_buffer();	
 		switch(opcao)
 		{
 			case 0:
@@ -40,11 +40,19 @@ int main()
 					scanf("%d", &carro[cont].chassi);
 					printf("Qual o ano do carro? ");
 					scanf("%d", &carro[cont].ano);
-					printf("Qual a cor do carro? ");
-					int c;
-	                while ((c = getchar()) != '\n' && c != EOF);
-	                fgets(carro[cont].cor, MAX, stdin);
-	                carro[cont].cor[strcspn(carro[cont].cor, "\n")] = '\0';
+				 	limpar_buffer();
+                	printf("Qual a cor do carro? ");
+                	fgets(carro[cont].cor, MAX, stdin);
+                	int i = 0;
+                	while (carro[cont].cor[i] != '\0') 
+					{
+                    	if (carro[cont].cor[i] == '\n') 
+						{
+                        	carro[cont].cor[i] = '\0';
+                        break;
+                    	}
+                    i++;
+                	}
 					printf("\n");
 					cont++;
 					break;
@@ -76,18 +84,26 @@ int main()
                 printf("Digite o número do carro que vc quer atualizar: \n");
                 int num;
                 scanf("%d", &num);
-                if (num >= 1 && num <= cont)
+				if (num >= 1 && num <= cont)
 				{
-                    printf("Digite o chassi: ");
-                    scanf("%d", &carro[num - 1].chassi);
-                    printf("Digite o ano: ");
-                    scanf("%d", &carro[num - 1].ano);
-                    printf("Digite a cor: ");
-	                int d;
-	                while ((d = getchar()) != '\n' && d != EOF);
-	                fgets(carro[num - 1].cor, MAX, stdin);
-	                carro[num - 1].cor[strcspn(carro[num - 1].cor, "\n")] = '\0';
-                }
+                	printf("Digite o chassi: ");
+                	scanf("%d", &carro[num - 1].chassi);
+                	printf("Digite o ano: ");
+                	scanf("%d", &carro[num - 1].ano);
+                	limpar_buffer();
+                	printf("Digite a cor: ");
+                	fgets(carro[num - 1].cor, MAX, stdin);
+                	int i = 0;
+                	while (carro[num-1].cor[i] != '\0') 
+					{
+                    	if (carro[num-1].cor[i] == '\n') 
+						{
+                        	carro[num-1].cor[i] = '\0';
+                        break;
+                    	}
+                    i++;
+                	}
+            	}
 				else 
 				{
                     printf("Número inválido\n");
@@ -125,7 +141,8 @@ int main()
 	}
 }
 
-void menu(){
+void menu()
+{
 	printf("O que deseja fazer:\n");
 	printf("0 - Sair\n");
     printf("1 - Cadastrar\n");
@@ -134,5 +151,13 @@ void menu(){
     printf("4 - Excluir\n");
     printf("\n");
 }
+
+void limpar_buffer()
+{
+	int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+
 
 
