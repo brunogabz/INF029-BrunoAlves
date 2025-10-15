@@ -640,7 +640,7 @@ int atualizar_aluno(Pessoa aluno[], int qtdAlunos)
 int atualizar_professor(Pessoa professor[], int qtdProfessores)
 {
 	listar_professores(professor, qtdProfessores);
-	printf("Qual aluno deseja atualizar?\n");
+	printf("Qual professor deseja atualizar?\n");
 	int atualizado;
 	scanf("%d", &atualizado);
     limpar_buffer();
@@ -699,7 +699,7 @@ void lista_professores_alfabetica(Pessoa professor[], int qtdProfessores)
     }
     for (int i = 0; i < qtdProfessores; i++)
     {
-        printf("Aluno %d - Nome: %s - Sexo: %c - Data de Nascimento:  %02d/%02d/%d - CPF: %s - Matricula: %s\n", i+1, professores_ordenados[i].nome, professores_ordenados[i].sexo, professores_ordenados[i].data.dia, professores_ordenados[i].data.mes, professores_ordenados[i].data.ano, professores_ordenados[i].cpf, professores_ordenados[i].matricula);
+        printf("Professor %d - Nome: %s - Sexo: %c - Data de Nascimento:  %02d/%02d/%d - CPF: %s - Matricula: %s\n", i+1, professores_ordenados[i].nome, professores_ordenados[i].sexo, professores_ordenados[i].data.dia, professores_ordenados[i].data.mes, professores_ordenados[i].data.ano, professores_ordenados[i].cpf, professores_ordenados[i].matricula);
     }
     printf("\n"); 
 }
