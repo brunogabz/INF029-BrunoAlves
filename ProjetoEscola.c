@@ -126,6 +126,11 @@ int main()
 						}
 						break;
 					}	
+					default:
+					{
+						printf("OPCAO INVALIDA!");
+						break;
+					}
 				}
 				break;
 			}
@@ -162,7 +167,12 @@ int main()
 							qtdProfessores--;
 						}
 						break;
-					}		
+					}	
+					default:
+					{
+						printf("OPCAO INVALIDA!");
+						break;
+					}	
 				}
 				break;	
 			}
@@ -215,6 +225,11 @@ int main()
 								break;
 							}								
 						}
+						break;
+					}
+					default:
+					{
+						printf("OPCAO INVALIDA!");
 						break;
 					}		
 				}
@@ -312,9 +327,19 @@ int main()
 					{
 						aniversariantes_mes(aluno, qtdAlunos, professor, qtdProfessores);	
 						break;
-					}	
+					}
+					default:
+					{
+						printf("OPCAO INVALIDA!");
+						break;
+					}
 				}
 			}
+			default:
+				{
+				printf("OPCAO INVALIDA!");
+				break;
+				}	
 			break;	
 		}	
 
