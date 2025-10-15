@@ -334,6 +334,7 @@ int main()
 						break;
 					}
 				}
+				break;
 			}
 			default:
 				{
