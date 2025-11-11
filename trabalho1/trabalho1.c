@@ -10,10 +10,10 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome: Bruno
-//  email:
-//  Matrícula:
-//  Semestre:
+//  Nome: Bruno Gabriel Albuquerque da Silva Alves
+//  email: 20251160021@ifba.edu.br
+//  Matrícula: 20251160021
+//  Semestre: 2025.2
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021 - 19/08/2016 - 17/10/2025
@@ -91,17 +91,75 @@ int teste(int a)
  */
 int q1(char data[])
 {
-  int datavalida = 1;
-
-  //quebrar a string data em strings sDia, sMes, sAno
-
-
-  //printf("%s\n", data);
-
-  if (datavalida)
-      return 1;
-  else
-      return 0;
+	int i = 0;
+	int d = 0;
+	int m = 0;
+	int a = 0;
+  	char ssDia[3];
+  	char ssMes[3];
+  	char ssAno[5];
+  	int datavalida = 1;
+  	if (data[0] == '/')
+  	{
+    	datavalida = 0;
+    	return 0;
+  	} 
+		for(i=0;data[i] != '/'; i++)
+		{
+			ssDia[d] = data[i];
+			d++;
+		}
+		ssDia[d] = '\0';
+		i++;
+		for(i=i;data[i] != '/'; i++)
+		{
+			ssMes[m] = data[i];
+			m++;
+		}
+		ssMes[m] = '\0';
+		i++;
+		for(i=i;data[i] != '\0'; i++)
+		{
+			ssAno[a] = data[i];
+			a++;
+		}
+		ssAno[a] = '\0';
+		int sDia = atoi(ssDia);
+		int sMes = atoi(ssMes);
+		int sAno = atoi(ssAno);
+	
+		if(sDia < 1 || sDia > 31 || sMes < 1 || sMes > 12)
+		{
+			datavalida = 0;
+		}
+		else if(sMes == 2)
+		{
+			if((sAno % 4 == 0 && sAno % 100 != 0) || (sAno % 400 == 0))
+			{
+				if(sDia < 1 || sDia > 29)
+					datavalida = 0;
+			}
+			else
+			{
+				if(sDia < 1 || sDia > 28)
+					datavalida = 0;
+			}
+		}
+		else if(sMes == 1 || sMes == 3 || sMes == 5 || sMes == 7 || sMes == 8 || sMes == 10 || sMes == 12)
+		{
+			if(sDia < 1 || sDia > 31)
+				datavalida = 0;
+		}
+		else if(sMes == 4 || sMes == 6 || sMes == 9 || sMes == 11)
+		{
+			if(sDia < 1 || sDia > 30)
+				datavalida = 0;		
+		}
+		
+		if (datavalida)
+			return 1;
+		else
+		return 0;
 }
 
 
@@ -141,7 +199,7 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       //se tudo der certo
       dma.retorno = 1;
       return dma;
-      
+
     }
     
 }
@@ -158,9 +216,29 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
-
-    return qtdOcorrencias;
+	int c2 = 0;
+    int qtdOcorrencias = 0;
+	if(isCaseSensitive != 1)
+	{
+		if(c > 64 && c < 91)
+			c2 = c + 32;
+		else if(c > 96 && c < 123)
+			c2 = c - 32;
+		for(int i = 0; texto[i] != '\0'; i++)
+		{
+			if(texto[i] == c || texto[i] == c2)
+			qtdOcorrencias++;
+		}	
+	}
+	else if(isCaseSensitive == 1)
+	{
+		for(int i = 0; texto[i] != '\0'; i++)
+		{
+			if(texto[i] == c)
+			qtdOcorrencias++;
+		}
+	}
+  return qtdOcorrencias;
 }
 
 /*
@@ -180,9 +258,40 @@ int q3(char *texto, char c, int isCaseSensitive)
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
-
-    return qtdOcorrencias;
+	int palavra = 0;
+	int posicao = 0;
+    int qtdOcorrencias = 0;
+	for(int i = 0; strTexto[i] != '\0'; i++)
+	{
+		palavra = 0;
+		if(strBusca[palavra] == strTexto[i])
+		{
+			int j = i;
+			while(strBusca[palavra] != '\0' && strTexto[j] != '\0')
+			{
+				if(strBusca[palavra] == strTexto[j] && strBusca[palavra+1] != '\0')
+				{
+					palavra++;
+					j++;
+				}
+				else if(strBusca[palavra] == strTexto[j] && strBusca[palavra+1] == '\0')
+				{	
+					posicoes[posicao] = i+1;
+					posicao++;
+					posicoes[posicao] = j+1;
+					posicao++;
+					i = j;
+					qtdOcorrencias++;
+					break;
+				}
+				else if(strBusca[palavra] != strTexto[j])
+				{
+					break;
+				}
+			}
+		}
+	}
+  return qtdOcorrencias;
 }
 
 /*
@@ -197,8 +306,16 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
-
-    return num;
+	int num2 = num;
+	num = 0;
+	while(num2 > 0)
+	{
+		num = num + num2%10;
+		num = num*10;
+		num2 = num2/10;		
+	}
+	num = num/10;
+  return num;
 }
 
 /*
@@ -213,8 +330,36 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
-    return qtdOcorrencias;
+	int qtdOcorrencias = 0;
+	int qtdDigitos = 0;
+	int copianumerobusca = numerobusca;
+	while(copianumerobusca > 0)
+	{
+		copianumerobusca = copianumerobusca/10;
+		qtdDigitos++;
+	}
+	int resto = 1;
+	while(qtdDigitos > 0)
+	{
+		resto = resto*10;
+		qtdDigitos--;
+	}
+    int num;
+    while(numerobase > 0)
+    {
+    	num = numerobase%resto;	
+    	if(num == numerobusca)
+    	{
+    		qtdOcorrencias++;
+			  numerobase = numerobase/resto;
+		  }
+		else
+		{
+			numerobase = numerobase/10;
+		}
+	}
+
+  return qtdOcorrencias;
 }
 
 /*
@@ -229,8 +374,125 @@ int q6(int numerobase, int numerobusca)
 
  int q7(char matriz[8][10], char palavra[5])
  {
-     int achou;
-     return achou;
+     int achou = 0;
+     for(int i = 0; i < 8; i++)
+     {
+     	for(int j = 0; j < 10; j++)
+     	{
+     		int p = 0;
+     		if(palavra[p] == matriz[i][j])
+     		{
+     			int k = i;
+     			int l = j;
+				while(k < 8 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) //baixo
+				{
+					p++;
+					k++;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}
+				p = 0;
+				k = i;
+				l = j;
+				while(k >= 0 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) //cima
+				{
+					p++;
+					k--;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}
+				p = 0;
+				k = i;
+				l = j;				
+				while(l < 10 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) //direita
+				{
+					p++;
+					l++;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}
+				p = 0;
+				k = i;
+				l = j;				
+				while(l >= 0 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) //esquerda
+				{
+					p++;
+					l--;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}
+				p = 0;
+				k = i;
+				l = j;				
+				while(l < 10 && k < 8 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) // baixo direita
+				{
+					p++;
+					k++;
+					l++;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}
+				p = 0;
+				k = i;
+				l = j;				
+				while(l >= 0 && k < 8 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) // baixo esquerda
+				{
+					p++;
+					k++;
+					l--;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}
+				p = 0;
+				k = i;
+				l = j;					
+				while(l < 10 && k >= 0 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) // cima direita
+				{
+					p++;
+					k--;
+					l++;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}
+				p = 0;
+				k = i;
+				l = j;				
+				while(l >= 0 && k >= 0 && palavra[p] != '\0' && palavra[p] == matriz[k][l]) // cima esquuerda
+				{
+					p++;
+					k--;
+					l--;
+				}
+				if(palavra[p] == '\0')
+				{
+					achou = 1;
+					return achou;
+				}											
+			}	
+		}
+	 }
+    return achou;
  }
 
 
