@@ -180,8 +180,6 @@ int q1(char data[])
  */
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
-
-    //calcule os dados e armazene nas três variáveis a seguir
     DiasMesesAnos dma;
 
     if (q1(datainicial) == 0){
@@ -190,18 +188,75 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
     }else if (q1(datafinal) == 0){
       dma.retorno = 3;
       return dma;
-    }else{
-      //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
+	}
+	
+    int d1, m1, a1;
+    char ssDia1[3], ssMes1[3], ssAno1[5];
+    int i = 0, d = 0, m = 0, a = 0;
+    for (i = 0; datainicial[i] != '/'; i++) ssDia1[d++] = datainicial[i];
+    ssDia1[d] = '\0'; i++;
+    for (m = 0; datainicial[i] != '/'; i++) ssMes1[m++] = datainicial[i];
+    ssMes1[m] = '\0'; i++;
+    for (a = 0; datainicial[i] != '\0'; i++) ssAno1[a++] = datainicial[i];
+    ssAno1[a] = '\0';
+    d1 = atoi(ssDia1);
+    m1 = atoi(ssMes1);
+    a1 = atoi(ssAno1);
+	 
+    int d2, m2, a2;
+    char ssDia2[3], ssMes2[3], ssAno2[5];
+    i = 0; d = 0; m = 0; a = 0; 
+    for (i = 0; datafinal[i] != '/'; i++) ssDia2[d++] = datafinal[i];
+    ssDia2[d] = '\0'; i++;
+    for (m = 0; datafinal[i] != '/'; i++) ssMes2[m++] = datafinal[i];
+    ssMes2[m] = '\0'; i++;
+    for (a = 0; datafinal[i] != '\0'; i++) ssAno2[a++] = datafinal[i];
+    ssAno2[a] = '\0';
+    d2 = atoi(ssDia2);
+    m2 = atoi(ssMes2);
+    a2 = atoi(ssAno2);
 
-
-      //se tudo der certo
-      dma.retorno = 1;
-      return dma;
-
+    if (a1 > a2 || (a1 == a2 && m1 > m2) || (a1 == a2 && m1 == m2 && d1 > d2))
+    {
+        dma.retorno = 4;
+        return dma;
     }
-    
+
+    int anos = a2 - a1;
+    int meses = m2 - m1;
+    int dias = d2 - d1;
+    if (dias < 0)
+    {
+        meses--;    
+        int diasMesAnterior;
+        if (m2 == 1) { 
+            diasMesAnterior = 31;
+        } else if (m2 == 3) { 
+            
+            if ((a2 % 4 == 0 && a2 % 100 != 0) || (a2 % 400 == 0))
+                diasMesAnterior = 29;
+            else
+                diasMesAnterior = 28;
+        } else if (m2 == 2 || m2 == 4 || m2 == 6 || m2 == 8 || m2 == 9 || m2 == 11) {
+            
+            diasMesAnterior = 31;
+        } else {
+            
+            diasMesAnterior = 30;
+        }
+        
+        dias += diasMesAnterior;
+    }
+    if (meses < 0)
+    {
+        anos--; 
+        meses += 12; 
+    }
+    dma.qtdDias = dias;
+    dma.qtdMeses = meses;
+    dma.qtdAnos = anos;
+    dma.retorno = 1;
+    return dma; 
 }
 
 /*
