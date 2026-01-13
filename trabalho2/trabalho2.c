@@ -320,33 +320,35 @@ Rertono (int)
 */
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
-	int retorno = 0;
-	int tamanhonovo = vetorPrincipal[posicao-1][0] + novoTamanho;
-	if(posicao < 1 || posicao > 10){
-    	retorno = POSICAO_INVALIDA;
-    	return retorno;
-	}
-	else if(vetorPrincipal[posicao-1] == NULL){
-		  retorno = SEM_ESTRUTURA_AUXILIAR;
-    	return retorno;
-	}
-	else if(tamanhonovo < 1){
-		  retorno = NOVO_TAMANHO_INVALIDO;
-      return retorno;		
-	}
-	int *novaEstrutura = realloc(vetorPrincipal[posicao-1], (tamanhonovo + 2) * sizeof(int));
-	if(novaEstrutura == NULL){
+    int retorno = 0;
+    if(posicao < 1 || posicao > 10){
+        retorno = POSICAO_INVALIDA;
+        return retorno;
+    }
+    else if(vetorPrincipal[posicao-1] == NULL){
+          retorno = SEM_ESTRUTURA_AUXILIAR;
+        return retorno;
+    }
+    int tamanhonovo = vetorPrincipal[posicao-1][0] + novoTamanho;
+    if(tamanhonovo < 1){
+          retorno = NOVO_TAMANHO_INVALIDO;
+      return retorno;       
+    }
+
+    int *novaEstrutura = realloc(vetorPrincipal[posicao-1], (tamanhonovo + 2) * sizeof(int));
+    if(novaEstrutura == NULL){
       retorno = SEM_ESPACO_DE_MEMORIA;
       return retorno;
-  }
-	vetorPrincipal[posicao-1] = novaEstrutura;
-	vetorPrincipal[posicao-1][0] = tamanhonovo;
-	if(vetorPrincipal[posicao-1][1] > tamanhonovo){
-		  vetorPrincipal[posicao-1][1] = tamanhonovo;
-  }		
-  retorno = SUCESSO;
-  return retorno;	
+    }
+    vetorPrincipal[posicao-1] = novaEstrutura;
+    vetorPrincipal[posicao-1][0] = tamanhonovo;
+    if(vetorPrincipal[posicao-1][1] > tamanhonovo){
+          vetorPrincipal[posicao-1][1] = tamanhonovo;
+    }       
+    retorno = SUCESSO;
+    return retorno; 
 }
+
 
 /*
 Objetivo: retorna a quantidade de elementos preenchidos da estrutura auxiliar da posição 'posicao'.
