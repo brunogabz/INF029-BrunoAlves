@@ -441,6 +441,10 @@ Retorno void
 */
 void getDadosListaEncadeadaComCabecote(No *inicio, int vetorAux[])
 {
+	if (inicio == NULL) {
+        return;
+	}
+	
     No *atual = inicio->prox;
     int k = 0;
 
